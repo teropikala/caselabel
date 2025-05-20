@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { CaseType, FormData, CustomDetails, MakitaTool } from './types';
-import { saveFormData, loadFormData } from './utils/cookieUtils';
 import CaseTypeSelector from './components/CaseTypeSelector';
 import ToolSelector from './components/ToolSelector';
 import CustomDetailsForm from './components/CustomDetailsForm';
@@ -19,18 +18,6 @@ function App() {
     }
   });
 
-  // Load saved data from cookies on initial render
-  useEffect(() => {
-    const savedData = loadFormData();
-    if (savedData) {
-      setFormData(savedData);
-    }
-  }, []);
-
-  // Save data to cookies whenever it changes
-  useEffect(() => {
-    saveFormData(formData);
-  }, [formData]);
 
   // Handle case type change
   const handleCaseTypeChange = (caseType: CaseType) => {
@@ -63,9 +50,12 @@ function App() {
     <div className="app-container">
       <div className="app-content">
         <header className="header">
-          <h1 className="header-title">Makita MakPac Case Label Generator</h1>
+          <h1 className="header-title">Makpac Case Label Generator</h1>
           <p className="header-subtitle">
-            Create custom labels for your Makita MakPac tool cases
+            Create custom labels for your Makita Makpac tool cases.
+          </p>
+          <p className="header-subtitle">
+            Smaller labels have limited space - choose to display either the tool name or your contact details.
           </p>
         </header>
 
@@ -93,8 +83,12 @@ function App() {
 
         <footer className="footer">
           <p>
-            This tool is for generating labels for Makita MakPac tool cases.
-            Your data is only stored in your browser cookies.
+            Your data is not stored anywhere
+            | <a href="https://github.com/teropikala/caselabel">GitHub</a>
+          </p>
+          <br/>
+          <p>
+            Makita® and Makpac® are registered trademarks of Makita Corporation.
           </p>
         </footer>
       </div>

@@ -9,11 +9,9 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
-    "@types/js-cookie": "^3.0.6",
     "@types/node": "^16.18.126",
     "@types/react": "^19.1.4",
     "@types/react-dom": "^19.1.5",
-    "js-cookie": "^3.0.5",
     "pdf-lib": "^1.17.1",
     "postcss": "^8.5.3",
     "react": "^19.1.0",
@@ -25,9 +23,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && cp src/tools.json build/tools.json",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && aws s3 sync build/ s3://caselabel --delete"
   },
   "eslintConfig": {
     "extends": [

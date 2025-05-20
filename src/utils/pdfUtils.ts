@@ -67,6 +67,34 @@ export const generatePDF = async (formData: FormData): Promise<Uint8Array> => {
   const fontSize = 24;
   const margin = 20;
 
+  // Add information at the top of the PDF
+  const infoFontSize = 10;
+  const generatorText = "Generated with Makpac Case Label Generator - https://caselabel.pikala.com/";
+  const trademarkText = "Makita® and MakPac® are registered trademarks of Makita Corporation.";
+
+  // Position the text at the top of the page with some margin
+  const topMargin = 30;
+
+  // Draw the generator text
+  const generatorTextWidth = font.widthOfTextAtSize(generatorText, infoFontSize);
+  page.drawText(generatorText, {
+    x: (A4_WIDTH / 2) - (generatorTextWidth / 2),
+    y: A4_HEIGHT - topMargin,
+    size: infoFontSize,
+    font: font,
+    color: rgb(0, 0, 0),
+  });
+
+  // Draw the trademark text below the generator text
+  const trademarkTextWidth = font.widthOfTextAtSize(trademarkText, infoFontSize);
+  page.drawText(trademarkText, {
+    x: (A4_WIDTH / 2) - (trademarkTextWidth / 2),
+    y: A4_HEIGHT - topMargin - infoFontSize - 5, // 5 points spacing between lines
+    size: infoFontSize,
+    font: font,
+    color: rgb(0, 0, 0),
+  });
+
   // Draw the label area
   page.drawRectangle({
     x: labelX,

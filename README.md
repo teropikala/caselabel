@@ -44,3 +44,53 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## Building and Deploying to AWS S3
+
+### Prerequisites
+
+1. Node.js and npm installed
+2. AWS CLI installed and configured with appropriate credentials
+3. An S3 bucket created for hosting the website
+
+### Building the Application
+
+To build the application for production:
+
+```bash
+npm run build
+```
+
+This will:
+1. Create a production build in the `build` directory
+2. Copy the `tools.json` file to the build directory to ensure it's available in the deployed application
+
+### Deploying to AWS S3
+
+Before deploying, update the S3 bucket name in the `deploy` script in `package.json`:
+
+```
+"deploy": "npm run build && aws s3 sync build/ s3://YOUR_S3_BUCKET_NAME --delete"
+```
+
+Replace `YOUR_S3_BUCKET_NAME` with your actual S3 bucket name.
+
+Then run:
+
+```bash
+npm run deploy
+```
+
+This will build the application and sync the build directory with your S3 bucket.
+
+### S3 Bucket Configuration
+
+Ensure your S3 bucket is configured for static website hosting:
+
+1. In the AWS Management Console, navigate to your S3 bucket
+2. Go to the "Properties" tab
+3. Enable "Static website hosting"
+4. Set "Index document" to `index.html`
+5. Set appropriate bucket permissions to allow public access if needed
+
+For more information, see [Hosting a Static Website on Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html).

@@ -54,3 +54,4 @@ public/uploads/*
 
 # Ignore local editor settings
 /.vscode/settings.json
+/build/
