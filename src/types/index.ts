@@ -8,10 +8,9 @@ export enum CaseType {
 
 // Define the structure for a Makita tool
 export interface MakitaTool {
-  id: string;
   name: string;
   model: string;
-  caseType: CaseType;
+  description: string;
 }
 
 // Define the structure for custom details

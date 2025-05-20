@@ -1,0 +1,27 @@
+[
+  {
+    "model": "DGA463",
+    "name": "Angle Grinder",
+    "description": "18V Li-Ion LXT Brushless 115mm"
+  },
+  {
+    "model": "DHR242",
+    "name": "Rotary Hammer Drill",
+    "description": "18v LXT Li-Ion 3 Mode 3KG SDS"
+  },
+  {
+    "model": "DTM51",
+    "name": "Multi-Tool",
+    "description": "18v LXT"
+  },
+  {
+    "model": "DTD153 & DHP484",
+    "name": "Combi Drill & Impact Driver",
+    "description": "18V Li-Ion LXT Brushless"
+  },
+  {
+    "model": "BO3710",
+    "name": "Orbital Sander",
+    "description": "240V 1/3 Sheet"
+  }
+]

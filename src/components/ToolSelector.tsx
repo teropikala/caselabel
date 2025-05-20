@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MakitaTool } from '../types';
-import { makitaTools } from '../utils/mockData';
+import { makitaTools } from '../utils/toolsData';
 
 interface ToolSelectorProps {
   selectedTool: MakitaTool | null;
@@ -23,34 +23,22 @@ const ToolSelector: React.FC<ToolSelectorProps> = ({ selectedTool, onChange }) =
         <p className="text-gray-500">No tools available.</p>
       ) : (
         <div className="form-field">
-          <label htmlFor="toolSelector">Select a Tool</label>
           <select
             id="toolSelector"
-            value={selectedTool?.id || ''}
+            value={selectedTool?.name || ''}
             onChange={(e) => {
               const selectedId = e.target.value;
-              const tool = selectedId ? tools.find(t => t.id === selectedId) || null : null;
+              const tool = selectedId ? tools.find(t => t.name === selectedId) || null : null;
               onChange(tool);
             }}
           >
             <option value="">-- Select a tool --</option>
             {tools.map((tool) => (
-              <option key={tool.id} value={tool.id}>
-                {tool.name} - Model: {tool.model}
+              <option key={tool.name} value={tool.name}>
+                {tool.name} - {tool.model}
               </option>
             ))}
           </select>
-        </div>
-      )}
-
-      {selectedTool && (
-        <div className="mt-4">
-          <button
-            className="text-sm text-red-500 hover:text-red-700"
-            onClick={() => onChange(null)}
-          >
-            Clear Selection
-          </button>
         </div>
       )}
     </div>

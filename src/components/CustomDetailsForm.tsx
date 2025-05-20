@@ -52,12 +52,11 @@ const CustomDetailsForm: React.FC<CustomDetailsFormProps> = ({ customDetails, on
           <label htmlFor="additionalInfo">
             Additional Information
           </label>
-          <textarea
+          <input
             id="additionalInfo"
             name="additionalInfo"
             value={customDetails.additionalInfo}
             onChange={handleChange}
-            rows={3}
             placeholder="Any additional information you want to include"
           />
         </div>

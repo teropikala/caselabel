@@ -1,5 +1,6 @@
 import { PDFDocument, StandardFonts, rgb, degrees } from 'pdf-lib';
 import { FormData, CaseType } from '../types';
+import makitaLogo from '../Makita-logo.png';
 
 // Constants for PDF dimensions
 // A4 size in points (595 x 842)
@@ -7,10 +8,23 @@ const A4_WIDTH = 595;
 const A4_HEIGHT = 842;
 
 // Label size in mm converted to points (1 mm ≈ 2.83 points)
-const LABEL_WIDTH_MM = 165;
-const LABEL_HEIGHT_MM = 100;
+const LABEL_WIDTH_MM = 164;
+// Label height based on case type
+const getLabelHeightMM = (caseType: CaseType): number => {
+  switch (caseType) {
+    case CaseType.SMALL:
+      return 47;
+    case CaseType.MEDIUM:
+      return 100;
+    case CaseType.LARGE:
+      return 152;
+    case CaseType.EXTRALARGE:
+      return 257;
+    default:
+      return 100; // Default to medium
+  }
+};
 const LABEL_WIDTH = Math.round(LABEL_WIDTH_MM * 2.83);
-const LABEL_HEIGHT = Math.round(LABEL_HEIGHT_MM * 2.83);
 
 // Crop mark properties
 const CROP_MARK_LENGTH = 10;
@@ -20,7 +34,7 @@ const CROP_MARK_OFFSET = 5;
 const SVG_PATH = 'M50,50 L100,50 A50,50 0 0,1 50,0 Z'
 // SVG path dimensions
 const SVG_PATH_START_X = 50; // Starting X coordinate in the SVG path
-const SVG_PATH_ADJUSTMENT = 36; // Adjustment value for positioning the SVG path correctly
+const SVG_PATH_ADJUSTMENT = 34; // Adjustment value for positioning the SVG path correctly
 // The offset for positioning SVG paths is calculated as (SVG_PATH_START_X - SVG_PATH_ADJUSTMENT)
 // This ensures the path is correctly aligned with the corners of the label
 
@@ -35,14 +49,22 @@ export const generatePDF = async (formData: FormData): Promise<Uint8Array> => {
 
   // Get the standard font
   const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-  const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+
+  // Fetch and embed the Makita logo
+  const response = await fetch(makitaLogo);
+  const logoImageBytes = await response.arrayBuffer();
+  const logoImage = await pdfDoc.embedPng(logoImageBytes);
+
+  // Calculate label height based on case type
+  const LABEL_HEIGHT_MM = getLabelHeightMM(formData.caseType);
+  const LABEL_HEIGHT = Math.round(LABEL_HEIGHT_MM * 2.83);
 
   // Calculate position to center the label on the page
   const labelX = (A4_WIDTH - LABEL_WIDTH) / 2;
   const labelY = (A4_HEIGHT - LABEL_HEIGHT) / 2;
 
   // Set some properties for the label
-  const fontSize = 12;
+  const fontSize = 24;
   const margin = 20;
 
   // Draw the label area
@@ -58,7 +80,7 @@ export const generatePDF = async (formData: FormData): Promise<Uint8Array> => {
   // Right top corner curve
   page.drawSvgPath(SVG_PATH, {
     x: A4_WIDTH - (SVG_PATH_START_X - SVG_PATH_ADJUSTMENT),
-    y: (A4_HEIGHT / 2) + (LABEL_HEIGHT / 2) - 50,
+    y: labelY + LABEL_HEIGHT - 50,
     color: rgb(0, 0, 0),
     opacity: 1,
     rotate: degrees(180),
@@ -66,7 +88,7 @@ export const generatePDF = async (formData: FormData): Promise<Uint8Array> => {
 
   page.drawSvgPath(SVG_PATH, {
     x: A4_WIDTH - LABEL_WIDTH - (SVG_PATH_START_X - SVG_PATH_ADJUSTMENT),
-    y: (A4_HEIGHT / 2) + (LABEL_HEIGHT / 2) + 50,
+    y: labelY + LABEL_HEIGHT + 50,
     color: rgb(0, 0, 0),
     opacity: 1,
     rotate: degrees(270),
@@ -129,37 +151,53 @@ export const generatePDF = async (formData: FormData): Promise<Uint8Array> => {
     color: rgb(0, 0, 0),
   });
 
-  // Add title
-  page.drawText('MAKITA MAKPAC CASE LABEL', {
-    x: labelX + margin,
-    y: labelY + LABEL_HEIGHT - margin - fontSize,
-    size: 14,
-    font: boldFont,
-    color: rgb(0, 0, 0),
-  });
+  // Add Makita logo (skip for small labels)
+  let logoOffset = 0;
 
-  // Add case type
-  page.drawText(`Case Type: ${formData.caseType.toUpperCase()}`, {
-    x: labelX + margin,
-    y: labelY + LABEL_HEIGHT - margin - fontSize * 3,
-    size: fontSize,
-    font: font,
-    color: rgb(0, 0, 0),
-  });
+  if (formData.caseType !== CaseType.SMALL) {
+    const logoWidth = 200; // Adjusted for better fit at the top
+    const logoHeight = logoWidth * (logoImage.height / logoImage.width); // Maintain aspect ratio
+    page.drawImage(logoImage, {
+      x: labelX + (LABEL_WIDTH / 2) - (logoWidth / 2), // Center on the label, not the page
+      y: labelY + LABEL_HEIGHT - margin - logoHeight, // Keep at the top of the label
+      width: logoWidth,
+      height: logoHeight,
+    });
+
+    // Calculate offset for other elements based on logo height
+    logoOffset = logoHeight + 10; // Add some spacing after the logo
+  } else {
+    // For small labels, remove offset to align text in the middle
+    logoOffset = 0;
+  }
 
   // Add tool information if available
   if (formData.tool) {
-    page.drawText(`Tool: ${formData.tool.name}`, {
-      x: labelX + margin,
-      y: labelY + LABEL_HEIGHT - margin - fontSize * 4.5,
+    const toolText = `${formData.tool.name}`;
+    const toolWidth = font.widthOfTextAtSize(toolText, fontSize);
+    page.drawText(toolText, {
+      x: labelX + (LABEL_WIDTH / 2) - (toolWidth / 2),
+      y: labelY + LABEL_HEIGHT - margin - logoOffset - fontSize,
       size: fontSize,
       font: font,
       color: rgb(0, 0, 0),
     });
 
-    page.drawText(`Model: ${formData.tool.model}`, {
-      x: labelX + margin,
-      y: labelY + LABEL_HEIGHT - margin - fontSize * 6,
+    const modelText = `${formData.tool.model}`;
+    const modelWidth = font.widthOfTextAtSize(modelText, fontSize);
+    page.drawText(modelText, {
+      x: labelX + (LABEL_WIDTH / 2) - (modelWidth / 2),
+      y: labelY + LABEL_HEIGHT - margin - logoOffset - fontSize * 2.5,
+      size: fontSize,
+      font: font,
+      color: rgb(0, 0, 0),
+    });
+
+    const descriptionText = `${formData.tool.description}`;
+    const descriptionWidth = font.widthOfTextAtSize(descriptionText, fontSize);
+    page.drawText(descriptionText, {
+      x: labelX + (LABEL_WIDTH / 2) - (descriptionWidth / 2),
+      y: labelY + LABEL_HEIGHT - margin - logoOffset - fontSize * 4,
       size: fontSize,
       font: font,
       color: rgb(0, 0, 0),
@@ -168,11 +206,16 @@ export const generatePDF = async (formData: FormData): Promise<Uint8Array> => {
 
   // Add custom details
   const { customDetails } = formData;
-  let yPosition = labelY + LABEL_HEIGHT - margin - fontSize * 8;
+  // If tool information is not available, move custom details up
+  let yPosition = formData.tool 
+    ? labelY + LABEL_HEIGHT - margin - logoOffset - fontSize * 5.5  // Position after tool info
+    : labelY + LABEL_HEIGHT - margin - logoOffset - fontSize;       // Position right after logo (or at top if no logo)
 
   if (customDetails.ownerName) {
-    page.drawText(`Owner: ${customDetails.ownerName}`, {
-      x: labelX + margin,
+    const ownerText = `${customDetails.ownerName}`;
+    const ownerWidth = font.widthOfTextAtSize(ownerText, fontSize);
+    page.drawText(ownerText, {
+      x: labelX + (LABEL_WIDTH / 2) - (ownerWidth / 2),
       y: yPosition,
       size: fontSize,
       font: font,
@@ -182,8 +225,10 @@ export const generatePDF = async (formData: FormData): Promise<Uint8Array> => {
   }
 
   if (customDetails.contactDetails) {
-    page.drawText(`Contact: ${customDetails.contactDetails}`, {
-      x: labelX + margin,
+    const contactText = `${customDetails.contactDetails}`;
+    const contactWidth = font.widthOfTextAtSize(contactText, fontSize);
+    page.drawText(contactText, {
+      x: labelX + (LABEL_WIDTH / 2) - (contactWidth / 2),
       y: yPosition,
       size: fontSize,
       font: font,
@@ -193,8 +238,10 @@ export const generatePDF = async (formData: FormData): Promise<Uint8Array> => {
   }
 
   if (customDetails.additionalInfo) {
-    page.drawText(`Additional Info: ${customDetails.additionalInfo}`, {
-      x: labelX + margin,
+    const infoText = `${customDetails.additionalInfo}`;
+    const infoWidth = font.widthOfTextAtSize(infoText, fontSize);
+    page.drawText(infoText, {
+      x: labelX + (LABEL_WIDTH / 2) - (infoWidth / 2),
       y: yPosition,
       size: fontSize,
       font: font,
