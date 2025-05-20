@@ -23,5 +23,70 @@
     "model": "BO3710",
     "name": "Orbital Sander",
     "description": "240V 1/3 Sheet"
+  },
+  {
+    "model": "DHS680",
+    "name": "Circular Saw",
+    "description": "18V Li-Ion LXT Brushless 165mm"
+  },
+  {
+    "model": "DJR186",
+    "name": "Reciprocating Saw",
+    "description": "18V LXT Li-Ion"
+  },
+  {
+    "model": "DJV182",
+    "name": "Jigsaw",
+    "description": "18V Li-Ion LXT Brushless"
+  },
+  {
+    "model": "DML805",
+    "name": "LED Work Light",
+    "description": "14.4V/18V Cordless or 240V Mains"
+  },
+  {
+    "model": "XWT17",
+    "name": "Impact Wrench",
+    "description": "18V LXT Brushless 1/2\" Drive"
+  },
+  {
+    "model": "DUR368L",
+    "name": "Line Trimmer",
+    "description": "18V X2 (36V) LXT Brushless Loop Handle"
+  },
+  {
+    "model": "DHP486",
+    "name": "Hammer Drill Driver",
+    "description": "18V LXT Brushless"
+  },
+  {
+    "model": "XGT601",
+    "name": "Combo Kit",
+    "description": "40V Max XGT 6-Piece Brushless Kit"
+  },
+  {
+    "model": "DMP180",
+    "name": "Inflator",
+    "description": "18V LXT Digital Pressure Control"
+  },
+  {
+    "model": "SP6000J",
+    "name": "Plunge Cut Saw",
+    "description": "165mm 1300W with Guide Rail Compatibility"
+  },
+  {
+    "model": "LS1019L",
+    "name": "Slide Compound Mitre Saw",
+    "description": "260mm with Laser and Deep Cutting"
+  },
+  {
+    "model": "HR4013C",
+    "name": "AVT Rotary Hammer",
+    "description": "40mm SDS-Max Anti-Vibration Technology"
+  },
+  {
+    "model": "GA5040C",
+    "name": "Angle Grinder",
+    "description": "125mm 1400W with SJS II Anti-Kickback"
   }
 ]
