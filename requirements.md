@@ -1,11 +1,11 @@
 ## Background
 
-This project is a website to generate labels for Makita MakPac tool
-cases. Users can select correct case size and tool model to
+This project is a website to generate labels for Makita Makpac tool
+cases. Users can select the correct case size and tool model to
 initially populate the dialogs. There's also space for custom
-details like owners name and contact details.
+details like owners' name and contact details.
 
-Information entered is only saved to cookies and there is no backend
+Information entered is only saved to cookies, and there is no backend
 implementation.
 
 
@@ -26,7 +26,7 @@ Amazon CloudFront CDN.
 
 
 1. Select MakPac case type (3 options)
-2. Select Makita tool
+2. Select a Makita tool
 3. Enter optional custom details
 4. Download generated PDF 
 
