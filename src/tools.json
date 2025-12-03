@@ -88,5 +88,20 @@
     "model": "GA5040C",
     "name": "Angle Grinder",
     "description": "125mm 1400W with SJS II Anti-Kickback"
+  },
+  {
+    "model": "DDF484",
+    "name": "Drill Driver",
+    "description": "18V LXT Brushless"
+  },
+  {
+    "model": "HR2631",
+    "name": "AVT Rotary Hammer",
+    "description": "26mm SDS-Plus Anti-Vibration Technology"
+  },
+  {
+    "model": "DTW301",
+    "name": "Impact Wrench",
+    "description": "18V LXT Brushless 1/2\" Drive"
   }
 ]
