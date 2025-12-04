@@ -103,5 +103,106 @@
     "model": "DTW301",
     "name": "Impact Wrench",
     "description": "18V LXT Brushless 1/2\" Drive"
+  },
+
+  {
+    "model": "DHP482",
+    "name": "Combi Drill",
+    "description": "18V LXT Hammer Driver Drill"
+  },
+  {
+    "model": "DTD152",
+    "name": "Impact Driver",
+    "description": "18V LXT 1/4\" Hex"
+  },
+  {
+    "model": "DGA452",
+    "name": "Angle Grinder",
+    "description": "18V LXT 115mm"
+  },
+  {
+    "model": "DSS611",
+    "name": "Circular Saw",
+    "description": "18V LXT 165mm"
+  },
+  {
+    "model": "DJR183",
+    "name": "Reciprocating Saw",
+    "description": "18V LXT Compact"
+  },
+  {
+    "model": "DUB185",
+    "name": "Blower",
+    "description": "18V LXT Variable Speed"
+  },
+  {
+    "model": "DCL180",
+    "name": "Vacuum Cleaner",
+    "description": "18V LXT Cordless Stick Vac"
+  },
+  {
+    "model": "DHR171",
+    "name": "Rotary Hammer",
+    "description": "18V LXT 17mm SDS-Plus"
+  },
+  {
+    "model": "DLS714",
+    "name": "Slide Compound Mitre Saw",
+    "description": "18V X2 (36V) LXT 190mm"
+  },
+  {
+    "model": "DUB362",
+    "name": "Blower",
+    "description": "18V X2 (36V) LXT Brushless"
+  },
+  {
+    "model": "DUC353",
+    "name": "Chainsaw",
+    "description": "18V X2 (36V) LXT 350mm Brushless"
+  },
+  {
+    "model": "DBO180",
+    "name": "Random Orbit Sander",
+    "description": "18V LXT 125mm"
+  },
+  {
+    "model": "DHP458",
+    "name": "Hammer Drill Driver",
+    "description": "18V LXT Heavy Duty"
+  },
+  {
+    "model": "DGA504",
+    "name": "Angle Grinder",
+    "description": "18V LXT Brushless 125mm"
+  },
+  {
+    "model": "DHS710",
+    "name": "Circular Saw",
+    "description": "18V X2 (36V) LXT 190mm"
+  },
+  {
+    "model": "DTW1002",
+    "name": "Impact Wrench",
+    "description": "18V LXT Brushless 1/2\" High Torque"
+  },
+  {
+    "model": "DHR202",
+    "name": "Rotary Hammer",
+    "description": "18V LXT 20mm SDS-Plus"
+  },
+  {
+    "model": "DJV180",
+    "name": "Jigsaw",
+    "description": "18V LXT Barrel Grip"
+  },
+  {
+    "model": "DML802",
+    "name": "LED Flashlight",
+    "description": "18V LXT Pivoting Head"
+  },
+  {
+    "model": "DGA517",
+    "name": "Angle Grinder",
+    "description": "18V LXT Brushless 125mm Paddle Switch"
   }
 ]
