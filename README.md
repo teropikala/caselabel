@@ -1,96 +1,111 @@
-# Getting Started with Create React App
+# Makpac Case Label Generator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Generate clean, printable labels for Makita Makpac tool cases. Pick your case size, choose a Makita tool model, add optional owner/contact details, and download a ready‑to‑print PDF label.
 
-## Available Scripts
+Live stack: React + TypeScript + Tailwind CSS + pdf-lib. Static site deploy (S3 + CloudFront).
 
-In the project directory, you can run:
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Select Makpac case type (Small, Medium, Large)
+- Choose a Makita tool from the built‑in list
+- Add optional details (owner name, contact info, notes)
+- Instant preview and one‑click PDF export
+- Privacy friendly: no backend, data stays in your browser
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+## Quick Start
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Prerequisites:
+- Node.js and npm
 
-### `npm run build`
+Install and run locally:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm install
+npm start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Then open http://localhost:3000
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## How to Use
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+1. Pick your Makpac case size. Smaller cases have less label space; you may choose to show either the tool name or your contact details on the smallest sizes.
+2. Select the tool model. This will prefill the label with the correct tool name.
+3. Optionally add owner name, contact details, and extra notes.
+4. Click “Download PDF” to export a print‑ready label.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Tech Overview
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- React + TypeScript — UI and state management
+- Tailwind CSS — styling
+- pdf-lib — client‑side PDF generation
+- Create React App — build tooling
 
-## Learn More
+There is no server or database. Information you type remains in the browser (cookies/local storage/state) and is not sent to any backend.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Project Structure
 
-## Building and Deploying to AWS S3
+```
+caselabel/
+├─ public/                # Static assets and HTML shell
+├─ src/
+│  ├─ components/         # UI components (selectors, form, PDF generator)
+│  ├─ tools.json          # Tool list used by the selector
+│  ├─ App.tsx             # App layout and wiring
+│  └─ index.tsx           # App bootstrap
+├─ requirements.md        # Background, features, deployment notes
+└─ package.json
+```
 
-### Prerequisites
 
-1. Node.js and npm installed
-2. AWS CLI installed and configured with appropriate credentials
-3. An S3 bucket created for hosting the website
+## Scripts
 
-### Building the Application
+- `npm start` — start dev server at http://localhost:3000
+- `npm test` — run tests in watch mode
+- `npm run build` — production build to `build/`
+  - Copies `src/tools.json` to `build/tools.json` so the tool list is available after deploy
+- `npm run eject` — CRA eject (one‑way)
+- `npm run deploy` — build and sync `build/` to the configured S3 bucket
 
-To build the application for production:
+
+## Building and Deploying
+
+Build locally:
 
 ```bash
 npm run build
 ```
 
-This will:
-1. Create a production build in the `build` directory
-2. Copy the `tools.json` file to the build directory to ensure it's available in the deployed application
-
-### Deploying to AWS S3
-
-Before deploying, update the S3 bucket name in the `deploy` script in `package.json`:
-
-```
-"deploy": "npm run build && aws s3 sync build/ s3://YOUR_S3_BUCKET_NAME --delete"
-```
-
-Replace `YOUR_S3_BUCKET_NAME` with your actual S3 bucket name.
-
-Then run:
+Deploy to S3 (requires AWS CLI configured):
 
 ```bash
+# package.json contains a deploy script similar to:
 npm run deploy
 ```
 
-This will build the application and sync the build directory with your S3 bucket.
+Notes:
+- Ensure your bucket is set up for static website hosting (index document: `index.html`).
+- The default script syncs to `s3://caselabel`. Update this in `package.json` if you use a different bucket.
+- For production, it’s recommended to serve the S3 website via Amazon CloudFront.
 
-### S3 Bucket Configuration
+More on S3 hosting: https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html
 
-Ensure your S3 bucket is configured for static website hosting:
 
-1. In the AWS Management Console, navigate to your S3 bucket
-2. Go to the "Properties" tab
-3. Enable "Static website hosting"
-4. Set "Index document" to `index.html`
-5. Set appropriate bucket permissions to allow public access if needed
+## Privacy
 
-For more information, see [Hosting a Static Website on Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html).
+- No personal data is sent to a server. Data you enter stays in the browser only.
+- Anonymous usage stats may be collected via Simple Analytics (no personal data).
+
+
+## Acknowledgements
+
+Makita® and Makpac® are registered trademarks of Makita Corporation. This project is not affiliated with or endorsed by Makita.
+
+
+## License
+
+MIT — see `LICENSE` if provided, otherwise assume standard MIT terms.
