@@ -4,6 +4,7 @@ Generate clean, printable labels for Makita Makpac tool cases. Pick your case si
 
 Live stack: React + TypeScript + Tailwind CSS + pdf-lib. Static site deploy (S3 + CloudFront).
 
+Tool is available at https://caselabel.pikala.com/
 
 ## Features
 
