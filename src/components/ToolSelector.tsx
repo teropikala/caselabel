@@ -25,16 +25,21 @@ const ToolSelector: React.FC<ToolSelectorProps> = ({ selectedTool, onChange }) =
         <div className="form-field">
           <select
             id="toolSelector"
-            value={selectedTool?.name || ''}
+            value={selectedTool ? `${selectedTool.name}|${selectedTool.model}` : ''}
             onChange={(e) => {
               const selectedId = e.target.value;
-              const tool = selectedId ? tools.find(t => t.name === selectedId) || null : null;
+              if (!selectedId) {
+                onChange(null);
+                return;
+              }
+              const [name, model] = selectedId.split('|');
+              const tool = tools.find(t => t.name === name && t.model === model) || null;
               onChange(tool);
             }}
           >
             <option value="">-- Select a tool --</option>
             {tools.map((tool) => (
-              <option key={tool.name} value={tool.name}>
+              <option key={`${tool.name}|${tool.model}`} value={`${tool.name}|${tool.model}`}>
                 {tool.name} - {tool.model}
               </option>
             ))}
