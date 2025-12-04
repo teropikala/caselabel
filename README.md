@@ -10,7 +10,7 @@ Live stack: React + TypeScript + Tailwind CSS + pdf-lib. Static site deploy (S3 
 - Select Makpac case type (Small, Medium, Large)
 - Choose a Makita tool from the built‑in list
 - Add optional details (owner name, contact info, notes)
-- Instant preview and one‑click PDF export
+- One‑click PDF export
 - Privacy friendly: no backend, data stays in your browser
 
 
@@ -32,7 +32,7 @@ Then open http://localhost:3000
 ## How to Use
 
 1. Pick your Makpac case size. Smaller cases have less label space; you may choose to show either the tool name or your contact details on the smallest sizes.
-2. Select the tool model. This will prefill the label with the correct tool name.
+2. Select the tool model. This will prefill the label with the correct tool information.
 3. Optionally add owner name, contact details, and extra notes.
 4. Click “Download PDF” to export a print‑ready label.
 
@@ -44,7 +44,7 @@ Then open http://localhost:3000
 - pdf-lib — client‑side PDF generation
 - Create React App — build tooling
 
-There is no server or database. Information you type remains in the browser (cookies/local storage/state) and is not sent to any backend.
+There is no server or database. Information you type remains in the browser and is not sent to any backend.
 
 
 ## Project Structure
