@@ -83,8 +83,9 @@ function App() {
 
         <footer className="footer">
           <p>
-            Your data is not stored anywhere
-            | <a href="https://github.com/teropikala/caselabel">GitHub</a>
+              We use Simple Analytics to collect anonymous usage statistics
+              | No personal data is collected
+              | <a href="https://github.com/teropikala/caselabel">GitHub</a>
           </p>
           <br/>
           <p>
